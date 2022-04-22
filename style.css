@@ -1,0 +1,16 @@
+.row{
+   display: flex;
+   width: 500px;
+}
+
+button{
+   padding: 20px;
+   font-size: 20px;
+   margin: 5px;
+   flex: 1;
+   
+}
+
+#result{
+   font-size: 40px;
+}
