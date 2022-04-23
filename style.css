@@ -14,3 +14,7 @@ button{
 #result{
    font-size: 40px;
 }
+
+.selectedButton{
+   background-color: yellow;
+}
