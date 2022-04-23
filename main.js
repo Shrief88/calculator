@@ -21,8 +21,6 @@ function showResult(){
       firstNumber = displayArea.textContent;
       secondNumber='';
    }
-
-  
 }
 
 function clear(){
@@ -34,9 +32,6 @@ function clear(){
    errorText.textContent ='';
 }
 
-
-
-
 const numberButtons = document.querySelectorAll('.numberButton');
 const operatorButtons = document.querySelectorAll('.operatorButton');
 const equation =document.querySelector('#equation')
@@ -45,17 +40,18 @@ const equalButton = document.querySelector('#equal');
 const clearButton = document.querySelector('#clear');
 const deleteButton = document.querySelector('#delete');
 const errorText = document.querySelector('.error');
+const decimalButton = document.querySelector('#decimal');
 
 let isFirstNumber = true;
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
 
-
-
-
 numberButtons.forEach(button=>{
    button.addEventListener('click',()=>{  
+      if(button.value === '.' || (firstNumber.includes('.') && isFirstNumber && button.value === '.')){
+         decimalButton.disabled = true;
+      }     
       errorText.textContent ='';  
       isFirstNumber ? firstNumber += button.value : secondNumber +=button.value;  
       displayArea.textContent = isFirstNumber ? firstNumber : secondNumber; 
@@ -65,9 +61,7 @@ numberButtons.forEach(button=>{
 
 operatorButtons.forEach(button=>{
    button.addEventListener('click',()=>{
-      if(button.value !== '-' && firstNumber.length === 0){
-         errorText.textContent='You should choose a Number';
-      }
+      if(button.value !== '-' && firstNumber.length === 0) errorText.textContent='You should choose a Number';
       else if(button.value === '-' && firstNumber.length === 0){
          firstNumber = '-'
          equation.textContent = `${firstNumber}`
@@ -76,27 +70,23 @@ operatorButtons.forEach(button=>{
       else{
          errorText.textContent =''; 
          isFirstNumber = false; // now user can enter the second number of the equation
+         decimalButton.disabled = false;
          if(secondNumber.length > 0) showResult();
          operator = button.value;
          equation.textContent = `${firstNumber} ${operator}`
       }
-      
-      
    })
 })
 
 equal.addEventListener('click',()=>{
    if(firstNumber.length === 0) errorText.textContent='You should choose a number';
-   else if (secondNumber === '' || operator === '') {
-      equation.textContent =  `${firstNumber} =`
-      errorText.textContent = 'You should provide two numbers';
-   }
+   else if (secondNumber === '' || operator === '') errorText.textContent = 'You should provide two numbers';
    else{
       equation.textContent = `${firstNumber} ${operator} ${secondNumber} = ` ;
+      decimalButton.disabled = false;
+      isFirstNumber = true;
       showResult(); 
    }    
-   
-   
 })
 
 clearButton.addEventListener('click',clear);
