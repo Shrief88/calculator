@@ -13,9 +13,16 @@ function operate(number1,number2,operator){
 }
 
 function showResult(){
-   displayArea.textContent = operate(firstNumber,secondNumber,operator);
-   firstNumber = displayArea.textContent;
-   secondNumber='';
+   if (operator === '/' && secondNumber === '0'){
+      errorText.textContent = 'you can not divide by zero!';
+      clear()
+   }else{
+      displayArea.textContent = operate(firstNumber,secondNumber,operator);
+      firstNumber = displayArea.textContent;
+      secondNumber='';
+   }
+
+  
 }
 
 function clear(){
@@ -24,10 +31,11 @@ function clear(){
    operator='';
    displayArea.textContent=0;
    equation.textContent='';
+   errorText.textContent ='';
 }
 
 
-let isFirstNumber = true;
+
 
 const numberButtons = document.querySelectorAll('.numberButton');
 const operatorButtons = document.querySelectorAll('.operatorButton');
@@ -38,7 +46,7 @@ const clearButton = document.querySelector('#clear');
 const deleteButton = document.querySelector('#delete');
 const errorText = document.querySelector('.error');
 
-
+let isFirstNumber = true;
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
@@ -47,33 +55,45 @@ let operator = '';
 
 
 numberButtons.forEach(button=>{
-   button.addEventListener('click',()=>{    
+   button.addEventListener('click',()=>{  
+      errorText.textContent ='';  
       isFirstNumber ? firstNumber += button.value : secondNumber +=button.value;  
       displayArea.textContent = isFirstNumber ? firstNumber : secondNumber; 
-      equation.textContent = `${firstNumber} ${operator}`
+      equation.textContent = isFirstNumber ? `${firstNumber}` :`${firstNumber} ${operator} ${secondNumber}`
    })
 })
 
 operatorButtons.forEach(button=>{
    button.addEventListener('click',()=>{
-      isFirstNumber = false; // now user can enter the second number of the equation
-      if(secondNumber.length > 0){
-         showResult()
-      } 
-      operator = button.value;
-      equation.textContent = `${firstNumber} ${operator}`
+      if(button.value !== '-' && firstNumber.length === 0){
+         errorText.textContent='You should choose a Number';
+      }
+      else if(button.value === '-' && firstNumber.length === 0){
+         firstNumber = '-'
+         equation.textContent = `${firstNumber}`
+         displayArea.textContent = firstNumber;
+      }
+      else{
+         errorText.textContent =''; 
+         isFirstNumber = false; // now user can enter the second number of the equation
+         if(secondNumber.length > 0) showResult();
+         operator = button.value;
+         equation.textContent = `${firstNumber} ${operator}`
+      }
+      
+      
    })
 })
 
 equal.addEventListener('click',()=>{
-   if(equation.textContent === '') errorText.textContent='You should choose a number';
+   if(firstNumber.length === 0) errorText.textContent='You should choose a number';
    else if (secondNumber === '' || operator === '') {
       equation.textContent =  `${firstNumber} =`
       errorText.textContent = 'You should provide two numbers';
    }
    else{
-      equation.textContent = `${firstNumber} ${operator} ${secondNumber} = ` 
-      showResult();  
+      equation.textContent = `${firstNumber} ${operator} ${secondNumber} = ` ;
+      showResult(); 
    }    
    
    
