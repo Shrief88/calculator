@@ -16,6 +16,14 @@ function showResult(){
    secondNumber='';
 }
 
+function clear(){
+   firstNumber='';
+   secondNumber='';
+   operator='';
+   displayArea.textContent=0;
+   equation.textContent='';
+}
+
 
 let isFirstNumber = true;
 
@@ -56,5 +64,7 @@ equal.addEventListener('click',()=>{
    equation.textContent = `${firstNumber} ${operator} ${secondNumber} = `   
    showResult();
 })
+
+clearButton.addEventListener('click',clear);
 
 
