@@ -1,13 +1,15 @@
-add = ((a,b) => parseInt(a)+parseInt(b));
+add = ((a,b) => +a + +b);
 subtract = ((a,b) => a-b);
 multiply = ((a,b) => a*b);
 divide = ((a,b) => a/b);
 
+roundNumber = (number => Math.round(number*10)/10);
+
 function operate(number1,number2,operator){
    if (operator == '+') return add(number1,number2);
-   if (operator == '-') return subtract(number1,number2);
-   if (operator == '*') return multiply(number1,number2);
-   if (operator == '/') return divide(number1,number2);
+   if (operator == '-') return roundNumber(subtract(number1,number2));
+   if (operator == '*') return roundNumber(multiply(number1,number2));
+   if (operator == '/') return roundNumber(divide(number1,number2));
 }
 
 function showResult(){
@@ -34,11 +36,14 @@ const displayArea =document.querySelector('#result')
 const equalButton = document.querySelector('#equal');
 const clearButton = document.querySelector('#clear');
 const deleteButton = document.querySelector('#delete');
+const errorText = document.querySelector('.error');
 
 
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
+
+
 
 
 numberButtons.forEach(button=>{
@@ -51,7 +56,7 @@ numberButtons.forEach(button=>{
 
 operatorButtons.forEach(button=>{
    button.addEventListener('click',()=>{
-      isFirstNumber = false;
+      isFirstNumber = false; // now user can enter the second number of the equation
       if(secondNumber.length > 0){
          showResult()
       } 
@@ -61,10 +66,21 @@ operatorButtons.forEach(button=>{
 })
 
 equal.addEventListener('click',()=>{
-   equation.textContent = `${firstNumber} ${operator} ${secondNumber} = `   
-   showResult();
+   if(equation.textContent === '') errorText.textContent='You should choose a number';
+   else if (secondNumber === '' || operator === '') {
+      equation.textContent =  `${firstNumber} =`
+      errorText.textContent = 'You should provide two numbers';
+   }
+   else{
+      equation.textContent = `${firstNumber} ${operator} ${secondNumber} = ` 
+      showResult();  
+   }    
+   
+   
 })
 
 clearButton.addEventListener('click',clear);
+
+
 
 

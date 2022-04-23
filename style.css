@@ -18,3 +18,7 @@ button{
 .selectedButton{
    background-color: yellow;
 }
+
+.error{
+   color: red;
+}
