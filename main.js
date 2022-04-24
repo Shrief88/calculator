@@ -79,8 +79,8 @@ operatorButtons.forEach(button=>{
 })
 
 equal.addEventListener('click',()=>{
-   if(firstNumber.length === 0) errorText.textContent='You should choose a number';
-   else if (secondNumber === '' || operator === '') errorText.textContent = 'You should provide two numbers';
+   if(firstNumber.length === 0) errorText.textContent='You should choose a Number';
+   else if (secondNumber === '' || operator === '') errorText.textContent = 'You should provide Two Numbers';
    else{
       equation.textContent = `${firstNumber} ${operator} ${secondNumber} = ` ;
       decimalButton.disabled = false;
