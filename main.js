@@ -32,6 +32,20 @@ function clear(){
    errorText.textContent ='';
 }
 
+function deleteNumber(){
+   if (isFirstNumber){
+      firstNumber = firstNumber.slice(0,-1);
+      displayArea.textContent = firstNumber.length === 0 ? 0 : firstNumber;
+      equation.textContent =`${firstNumber}`
+   }
+   else{
+      secondNumber = secondNumber.slice(0,-1);
+      displayArea.textContent = secondNumber.length === 0 ? firstNumber : secondNumber;
+      equation.textContent =`${firstNumber} ${operator} ${secondNumber}`
+   }
+}
+
+
 const numberButtons = document.querySelectorAll('.numberButton');
 const operatorButtons = document.querySelectorAll('.operatorButton');
 const equation =document.querySelector('#equation')
@@ -91,6 +105,7 @@ equal.addEventListener('click',()=>{
 
 clearButton.addEventListener('click',clear);
 
+deleteButton.addEventListener('click',deleteNumber);
 
 
 
