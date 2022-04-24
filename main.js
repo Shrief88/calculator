@@ -32,18 +32,24 @@ function clear(){
    errorText.textContent ='';
 }
 
+
 function deleteNumber(){
    if (isFirstNumber){
       firstNumber = firstNumber.slice(0,-1);
-      displayArea.textContent = firstNumber.length === 0 ? 0 : firstNumber;
-      equation.textContent =`${firstNumber}`
+      firstNumber.length === 0 ? updateResult(0,`${firstNumber}`) : updateResult(firstNumber,`${firstNumber}`)
    }
    else{
       secondNumber = secondNumber.slice(0,-1);
-      displayArea.textContent = secondNumber.length === 0 ? firstNumber : secondNumber;
-      equation.textContent =`${firstNumber} ${operator} ${secondNumber}`
+      let equationText = `${firstNumber} ${operator} ${secondNumber}`;
+      secondNumber.length === 0 ? updateResult(firstNumber,equationText) : updateResult(secondNumber,equationText)
    }
 }
+
+function updateResult(number,string){
+   displayArea.textContent = number;
+   equation.textContent = string;
+}
+
 
 
 const numberButtons = document.querySelectorAll('.numberButton');
@@ -67,9 +73,14 @@ numberButtons.forEach(button=>{
          decimalButton.disabled = true;
       }     
       errorText.textContent ='';  
-      isFirstNumber ? firstNumber += button.value : secondNumber +=button.value;  
-      displayArea.textContent = isFirstNumber ? firstNumber : secondNumber; 
-      equation.textContent = isFirstNumber ? `${firstNumber}` :`${firstNumber} ${operator} ${secondNumber}`
+      if(isFirstNumber){
+         firstNumber +=button.value;
+         updateResult(firstNumber,`${firstNumber}`);
+      }
+      else{
+         secondNumber += button.value;
+         updateResult(secondNumber,`${firstNumber} ${operator} ${secondNumber}`)
+      }
    })
 })
 
