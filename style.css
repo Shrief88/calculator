@@ -33,6 +33,10 @@ button{
    border-radius: 30px;
 }
 
+button:active{
+   background-color: #EE9999 !important;
+}
+
 
 
 #result{
@@ -56,6 +60,8 @@ button{
    margin-top: 10px;
    font-size: 20px;
 }
+
+
 
 @media only screen and (max-width: 520px) {
    .row{
