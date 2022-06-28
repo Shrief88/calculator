@@ -2,7 +2,7 @@ body{
    display: flex;
    justify-content: center;
    align-items: center;
-   height: 100vh;
+   min-height: 100vh;
 }
 
 .container{
@@ -56,3 +56,14 @@ button{
    margin-top: 10px;
    font-size: 20px;
 }
+
+@media only screen and (max-width: 520px) {
+   .row{
+      width: 80vw;
+   }
+
+   .displayArea{
+      width: 75vw;
+   }
+
+ }
