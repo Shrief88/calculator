@@ -3,10 +3,11 @@ body{
    justify-content: center;
    align-items: center;
    min-height: 100vh;
+   background-color: #EEE5AF;
 }
 
 .container{
-   background-color: #AAAAAA;
+   background-color: #454344;
    padding: 20px;
    margin: 20px;
    border-radius: 40px;
